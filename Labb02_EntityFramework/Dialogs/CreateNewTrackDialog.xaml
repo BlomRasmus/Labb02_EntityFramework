@@ -1,0 +1,126 @@
+﻿<Window x:Class="Labb02_EntityFramework.Dialogs.CreateNewTrackDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Labb02_EntityFramework.Dialogs"
+        mc:Ignorable="d"
+        Title="CreateNewTrackDialog" Height="500" Width="400">
+    <Grid
+        DataContext="{Binding CreateStuffViewModel}">
+        <StackPanel x:Name="MyPanel">
+            <Label Content="Create New Track"
+                   HorizontalAlignment="Center"
+                   FontWeight="Bold"/>
+            <Label Content="Name"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"
+                   Margin="20, 0, 20, 0"/>
+            <TextBox Height="20"
+                     Margin="20, 0, 20, 0"
+                     Text="{Binding TrackName, UpdateSourceTrigger=PropertyChanged}"
+                     />
+            <Label Content="Album"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"
+                   Margin="20, 0, 20, 0"/>
+            <ComboBox Margin="20, 0, 20, 0"
+                      ItemsSource="{Binding Albums}"
+                      DisplayMemberPath="Title"
+                      SelectedItem="{Binding TrackAlbum}"/>
+            <Label Content="MediaType"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"
+                   Margin="20, 0, 20, 0"/>
+            <ComboBox Margin="20, 0, 20, 0"
+                      ItemsSource="{Binding MediaTypes}"
+                      DisplayMemberPath="Name" 
+                      SelectedItem="{Binding TrackMediaType}"/>
+            <Label Content="Genre"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"
+                   Margin="20, 0, 20, 0"/>
+            <ComboBox Margin="20, 0, 20, 0"
+                      ItemsSource="{Binding Genres}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding TrackGenre}"/>
+            <Label Content="Composer / Artist"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"
+                   Margin="20, 0, 20, 0"/>
+            <TextBox Height="20"
+                     Margin="20, 0, 20, 0"
+                     Text="{Binding TrackComposer, UpdateSourceTrigger=PropertyChanged}"/>
+                
+            <StackPanel 
+                Orientation="Horizontal"
+                Width="{Binding ElementName=MyPanel}">
+                <Label Content="Length"
+                       x:Name="LengthSlider"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       Margin="20, 0, 20, 0"/>
+                <Label Content="{Binding Value, ElementName=MySlider}"
+                       />
+            </StackPanel>
+                <Slider Minimum="0"
+                        Maximum="3600"
+                        Margin="20, 0, 20, 0"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        x:Name="MySlider"
+                        Value="{Binding TrackLength, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel 
+                Orientation="Horizontal"
+                Width="{Binding ElementName=MyPanel}">
+                <Label Content="Size (Mega Bytes)"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       Margin="20, 0, 20, 0"/>
+                <Label Content="{Binding Value, ElementName=SizeSlider}"
+                       />
+            </StackPanel>
+            <Slider Minimum="0"
+                    Maximum="100"
+                    Margin="20, 0, 20, 0"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    x:Name="SizeSlider"
+                    Value="{Binding TrackSize, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel 
+                Orientation="Horizontal"
+                Width="{Binding ElementName=MyPanel}">
+                <Label Content="Price ($)"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       Margin="20, 0, 20, 0"/>
+                <Label Content="{Binding Value, ElementName=PriceSlider}"
+                       />
+            </StackPanel>
+            <Slider Minimum="0"
+                    Maximum="100"
+                    Margin="20, 0, 20, 0"
+                    TickFrequency="0.01"
+                    IsSnapToTickEnabled="True"
+                    x:Name="PriceSlider"
+                    Value="{Binding TrackPrice, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <DockPanel
+                Width="125"
+                Margin="10">
+                <Button Content="Cancel"
+                        Height="20"
+                        Width="50"
+                        Click="Button_Click"/>
+
+                <Button Content="Create"
+                        Height="20"
+                        Width="50"
+                        HorizontalAlignment="Right"
+                        Command="{Binding CreateTrackCommand}"
+                        Click="Button_Click_1"
+                        />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>
