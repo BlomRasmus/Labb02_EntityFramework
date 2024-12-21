@@ -130,6 +130,8 @@ namespace Labb02_EntityFramework.ViewModel
         public DelegateCommand SetArtistVisibilityCommand { get; }
         public DelegateCommand EditTrackCommand { get; }
         public DelegateCommand EditAlbumCommand { get; }
+        public DelegateCommand EditArtistCommand { get; }
+
 
 
 
@@ -167,6 +169,7 @@ namespace Labb02_EntityFramework.ViewModel
             RemoveArtistCommand = new DelegateCommand(RemoveArtist);
             EditTrackCommand = new DelegateCommand(EditTrack);
             EditAlbumCommand = new DelegateCommand(EditAlbum);
+            EditArtistCommand = new DelegateCommand(EditArtist);
 
 
             Playlists = new ObservableCollection<Playlist>(PlaylistService.GetPlaylists());
@@ -278,8 +281,15 @@ namespace Labb02_EntityFramework.ViewModel
             using EveryloopContext db = new();
 
             db.Albums.Remove(SelectedAlbum);
+
+            var tracksToRemove = Tracks.Where(t => t.AlbumId == SelectedAlbum.AlbumId).ToList();
+            foreach (var track in tracksToRemove)
+            {
+                Tracks.Remove(track);
+            }
             Albums.Remove(SelectedAlbum);
 
+            RaisePropertyChanged(nameof(Tracks));
             RaisePropertyChanged(nameof(Albums));
 
             db.SaveChanges();
@@ -315,6 +325,10 @@ namespace Labb02_EntityFramework.ViewModel
         public void EditAlbum(object obj)
         {
             DialogService.ShowEditAlbumDialog();
+        }
+        public void EditArtist(object obj)
+        {
+            DialogService.ShowEditArtistDialog();
         }
     }
 }

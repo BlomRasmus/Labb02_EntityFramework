@@ -39,5 +39,10 @@ namespace Labb02_EntityFramework.DialogServices
             var editAlbumDialog = new EditAlbumDialog();
             editAlbumDialog.Show();
         }
+        public void ShowEditArtistDialog()
+        {
+            var editArtistDialog = new EditArtistDialog();
+            editArtistDialog.Show();
+        }
     }
 }

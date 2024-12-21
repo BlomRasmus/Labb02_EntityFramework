@@ -5,12 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Labb02_EntityFramework.Dialogs"
         mc:Ignorable="d"
-        Title="EditTrackDialog" Height="150" Width="300">
+        Title="EditTrackDialog" Height="250" Width="300">
     <Grid
         DataContext="{Binding CreateStuffViewModel}">
         <StackPanel>
-            
-        <StackPanel 
+            <Label Content="Edit Track"
+                   HorizontalAlignment="Center"
+                   FontWeight="Bold"/>
+            <Label Content="Name"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"
+                   Margin="20, 0, 20, 0"/>
+            <TextBox Height="20"
+                     Margin="20, 0, 20, 0"
+                     Text="{Binding TrackName, UpdateSourceTrigger=PropertyChanged}"
+                     />
+            <StackPanel 
                 Orientation="Horizontal"
                 Width="{Binding ElementName=MyPanel}">
             <Label Content="Length"

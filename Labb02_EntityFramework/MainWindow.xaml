@@ -203,6 +203,7 @@
                         Width="20"
                         Height="20"
                         Margin="4"
+                        Command="{Binding EditArtistCommand}"
                         >
                     <Image Source="{fa:IconSource ScrewdriverWrench}">
                     </Image>

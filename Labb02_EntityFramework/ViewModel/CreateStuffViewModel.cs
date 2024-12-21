@@ -116,6 +116,8 @@ namespace Labb02_EntityFramework.ViewModel
         public DelegateCommand CreateAlbumCommand { get; }
         public DelegateCommand UpdateTrackCommand { get; }
         public DelegateCommand UpdateAlbumCommand { get; }
+        public DelegateCommand UpdateArtistCommand { get; }
+
 
 
         public AlbumService AlbumService { get; set; }
@@ -144,6 +146,7 @@ namespace Labb02_EntityFramework.ViewModel
             CreateAlbumCommand = new DelegateCommand(CreateAlbum);
             UpdateTrackCommand = new DelegateCommand(UpdateTrack);
             UpdateAlbumCommand = new DelegateCommand(UpdateAlbum);
+            UpdateArtistCommand = new DelegateCommand(UpdateArtist);
         }
 
 
@@ -208,8 +211,10 @@ namespace Labb02_EntityFramework.ViewModel
 
             if(trackToUpdate != null)
             {
+                trackToUpdate.Name = TrackName;
                 trackToUpdate.Milliseconds = TrackLength * 1000;
                 mainWindowViewModel.SelectedTrack.Milliseconds = TrackLength * 1000;
+                mainWindowViewModel.SelectedTrack.Name = TrackName;
 
                 db.SaveChanges();
             }
@@ -228,6 +233,21 @@ namespace Labb02_EntityFramework.ViewModel
                 mainWindowViewModel.SelectedAlbum.Title = AlbumTitle;
                 mainWindowViewModel.SelectedAlbum.ArtistId = AlbumArtist.ArtistId;
                 RaisePropertyChanged(nameof(mainWindowViewModel.SelectedAlbum));
+
+                db.SaveChanges();
+            }
+        }
+        public void UpdateArtist(object obj)
+        {
+            using EveryloopContext db = new();
+
+            var artistToUpdate = db.Artists.FirstOrDefault(a => a.ArtistId == mainWindowViewModel.SelectedArtist.ArtistId);
+
+            if(artistToUpdate != null)
+            {
+                artistToUpdate.Name = ArtistName;
+                mainWindowViewModel.SelectedArtist.Name = ArtistName;
+                RaisePropertyChanged(nameof(mainWindowViewModel.Artists));
 
                 db.SaveChanges();
             }
