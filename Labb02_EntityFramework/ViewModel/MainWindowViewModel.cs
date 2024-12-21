@@ -208,24 +208,31 @@ namespace Labb02_EntityFramework.ViewModel
         {
             using EveryloopContext db = new();
 
-            if(!ActiveTracks.Any(t => t.TrackId == SelectedTrack.TrackId))
+            if(SelectedTrack != null && SelectedTrack.TrackId != 0)
             {
-                PlaylistTrack newTrackToPlaylist = new PlaylistTrack() { PlaylistId = ActivePlaylist.PlaylistId, TrackId = SelectedTrack.TrackId };
-                db.PlaylistTracks.Add(newTrackToPlaylist);
-                ActiveTracks.Add(SelectedTrack);
-            }
+                if(!ActiveTracks.Any(t => t.TrackId == SelectedTrack.TrackId))
+                {
+                    PlaylistTrack newTrackToPlaylist = new PlaylistTrack() { PlaylistId = ActivePlaylist.PlaylistId, TrackId = SelectedTrack.TrackId };
+                    db.PlaylistTracks.Add(newTrackToPlaylist);
+                    ActiveTracks.Add(SelectedTrack);
+                }
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
         }
         public void RemoveFromPlaylist(object obj)
         {
             using EveryloopContext db = new();
-            PlaylistTrack trackToDelete = new() { PlaylistId = ActivePlaylist.PlaylistId, TrackId = SelectedPlaylistTrack.TrackId };
-            db.PlaylistTracks.Remove(trackToDelete);
-            ActiveTracks.Remove(SelectedPlaylistTrack);
 
-            SelectedPlaylistTrack = ActiveTracks.FirstOrDefault();
-            db.SaveChanges();
+            if(SelectedPlaylistTrack != null)
+            {
+                PlaylistTrack trackToDelete = new() { PlaylistId = ActivePlaylist.PlaylistId, TrackId = SelectedPlaylistTrack.TrackId };
+                db.PlaylistTracks.Remove(trackToDelete);
+                ActiveTracks.Remove(SelectedPlaylistTrack);
+
+                SelectedPlaylistTrack = ActiveTracks.FirstOrDefault();
+                db.SaveChanges();
+            }
         }
 
         public void RemovePlayList(object obj)
@@ -249,15 +256,18 @@ namespace Labb02_EntityFramework.ViewModel
         {
             using EveryloopContext db = new();
 
-            db.Tracks.Remove(SelectedTrack);
-            Tracks.Remove(SelectedTrack);
-
-            if(ActiveTracks.Any(p => p == SelectedTrack))
+            if(SelectedTrack != null)
             {
-                ActiveTracks.Remove(SelectedTrack);
-            }
+                db.Tracks.Remove(SelectedTrack);
+                Tracks.Remove(SelectedTrack);
 
-            db.SaveChanges();
+                if(ActiveTracks.Any(p => p == SelectedTrack))
+                {
+                    ActiveTracks.Remove(SelectedTrack);
+                }
+
+                db.SaveChanges();
+            }
         }
 
         public void CreateArtist(object obj)
@@ -268,11 +278,14 @@ namespace Labb02_EntityFramework.ViewModel
         {
             using EveryloopContext db = new();
 
-            db.Artists.Remove(SelectedArtist);
-            Artists.Remove(SelectedArtist);
-            RaisePropertyChanged(nameof(Artists));
+            if (SelectedArtist != null)
+            {
+                db.Artists.Remove(SelectedArtist);
+                Artists.Remove(SelectedArtist);
+                RaisePropertyChanged(nameof(Artists));
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
         }
         public void CreateAlbum(object obj)
         {
@@ -282,19 +295,22 @@ namespace Labb02_EntityFramework.ViewModel
         {
             using EveryloopContext db = new();
 
-            db.Albums.Remove(SelectedAlbum);
-
-            var tracksToRemove = Tracks.Where(t => t.AlbumId == SelectedAlbum.AlbumId).ToList();
-            foreach (var track in tracksToRemove)
+            if(SelectedAlbum != null)
             {
-                Tracks.Remove(track);
+                db.Albums.Remove(SelectedAlbum);
+
+                var tracksToRemove = Tracks.Where(t => t.AlbumId == SelectedAlbum.AlbumId).ToList();
+                foreach (var track in tracksToRemove)
+                {
+                    Tracks.Remove(track);
+                }
+                Albums.Remove(SelectedAlbum);
+
+                RaisePropertyChanged(nameof(Tracks));
+                RaisePropertyChanged(nameof(Albums));
+
+                db.SaveChanges();
             }
-            Albums.Remove(SelectedAlbum);
-
-            RaisePropertyChanged(nameof(Tracks));
-            RaisePropertyChanged(nameof(Albums));
-
-            db.SaveChanges();
         }
 
 
