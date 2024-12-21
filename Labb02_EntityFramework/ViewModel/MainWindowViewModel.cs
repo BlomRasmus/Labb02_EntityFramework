@@ -131,6 +131,7 @@ namespace Labb02_EntityFramework.ViewModel
         public DelegateCommand EditTrackCommand { get; }
         public DelegateCommand EditAlbumCommand { get; }
         public DelegateCommand EditArtistCommand { get; }
+        public DelegateCommand RefreshCommand { get; }
 
 
 
@@ -170,6 +171,7 @@ namespace Labb02_EntityFramework.ViewModel
             EditTrackCommand = new DelegateCommand(EditTrack);
             EditAlbumCommand = new DelegateCommand(EditAlbum);
             EditArtistCommand = new DelegateCommand(EditArtist);
+            RefreshCommand = new DelegateCommand(Refresh);
 
 
             Playlists = new ObservableCollection<Playlist>(PlaylistService.GetPlaylists());
@@ -329,6 +331,25 @@ namespace Labb02_EntityFramework.ViewModel
         public void EditArtist(object obj)
         {
             DialogService.ShowEditArtistDialog();
+        }
+
+        public void Refresh(object obj)
+        {
+            if (IsTracksVisible == true)
+            {
+                Tracks = new ObservableCollection<Track>(TrackService.GetTracks());
+                RaisePropertyChanged(nameof(Tracks));
+            }
+            else if(IsAlbumsVisible == true)
+            {
+                Albums = new ObservableCollection<Album>(AlbumService.GetAlbums());
+                RaisePropertyChanged(nameof(Albums));
+            }
+            else if(IsArtistsVisible == true)
+            {
+                Artists = new ObservableCollection<Artist>(ArtistService.GetArtists());
+                RaisePropertyChanged(nameof(Artists));
+            }
         }
     }
 }

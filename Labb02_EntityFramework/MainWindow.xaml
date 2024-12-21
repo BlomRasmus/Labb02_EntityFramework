@@ -133,7 +133,18 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     >
-
+                <Button
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Width="20"
+                        Height="20"
+                        Margin="4"
+                        ToolTip="Refresh"
+                        Command="{Binding RefreshCommand}"
+                        >
+                    <Image Source="{fa:IconSource rotate}">
+                    </Image>
+                </Button>
                 <Button
                         DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
@@ -196,6 +207,18 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     >
+                <Button
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Width="20"
+                        Height="20"
+                        Margin="4"
+                        ToolTip="Refresh"
+                        Command="{Binding RefreshCommand}"
+                        >
+                    <Image Source="{fa:IconSource rotate}">
+                    </Image>
+                </Button>
 
                 <Button
                         DockPanel.Dock="Right"
@@ -235,6 +258,18 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     >
+                <Button
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Width="20"
+                        Height="20"
+                        Margin="4"
+                        ToolTip="Refresh"
+                        Command="{Binding RefreshCommand}"
+                        >
+                    <Image Source="{fa:IconSource rotate}">
+                    </Image>
+                </Button>
 
                 <Button
                         DockPanel.Dock="Right"
